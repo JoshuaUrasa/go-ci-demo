@@ -8,5 +8,5 @@ func Add(a, b int) int {
 
 func main() {
     fmt.Println("Automatic build triggered from Git let see")
-    fmt.Println("2 + 3 =", Add(2, 8))
+    fmt.Println("2 + 8 =", Add(2, 8))
 }

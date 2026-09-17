@@ -3,6 +3,10 @@ pipeline {
         label 'go'
     }
 
+    triggers {
+    pollSCM('* * * * *')
+}
+
     stages {
         stage('Test') {
             steps {

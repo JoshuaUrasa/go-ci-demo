@@ -44,4 +44,18 @@ pipeline {
             }
         }
     }
+
+        post {
+        always {
+            echo "Build #${env.BUILD_NUMBER} has finished executing."
+        }
+
+        success {
+            echo 'SUCCESS: All stages completed successfully.'
+        }
+
+        failure {
+            echo 'FAILURE: Check Console Output for the first error.'
+        }
+    }
 }

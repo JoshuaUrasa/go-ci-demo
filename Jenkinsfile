@@ -4,8 +4,8 @@ pipeline {
     }
 
     triggers {
-    pollSCM('* * * * *')
-}
+        pollSCM('* * * * *')
+    }
 
     stages {
         stage('Test') {
@@ -24,24 +24,24 @@ pipeline {
             steps {
                 sh './demo'
             }
+        } // Run stage ends here
 
-            stage('Package') {
-    steps {
-        sh '''
-            mkdir -p dist
-            tar -czf "dist/go-ci-demo-${BUILD_NUMBER}.tar.gz" demo
-        '''
-    }
-}
+        stage('Package') {
+            steps {
+                sh '''
+                    mkdir -p dist
+                    tar -czf "dist/go-ci-demo-${BUILD_NUMBER}.tar.gz" demo
+                '''
+            }
+        }
 
-stage('Archive') {
-    steps {
-        archiveArtifacts(
-            artifacts: "dist/go-ci-demo-${env.BUILD_NUMBER}.tar.gz",
-            allowEmptyArchive: false
-        )
-    }
-}
+        stage('Archive') {
+            steps {
+                archiveArtifacts(
+                    artifacts: "dist/go-ci-demo-${env.BUILD_NUMBER}.tar.gz",
+                    allowEmptyArchive: false
+                )
+            }
         }
     }
 }

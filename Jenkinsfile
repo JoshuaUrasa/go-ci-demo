@@ -138,22 +138,7 @@ pipeline {
                 )
             }
         }
-        stage('Error handling practice') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    echo 'Simulating an error'
-                    sh 'exit 1'
-                }
 
-                echo 'This message still runs after the caught error'
-            }
-        }
-
-        stage('Continue after error') {
-            steps {
-                echo 'Jenkins continued to the next stage'
-            }
-        }
 
     }
 

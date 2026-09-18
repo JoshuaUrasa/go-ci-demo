@@ -18,6 +18,12 @@ pipeline {
             defaultValue: 'Learning Jenkins',
             description: 'A message to display for this build'
         )
+
+        booleanParam(
+            name: 'RUN_APP',
+            defaultValue: true,
+            description: 'Run the application after building'
+        )
     }
 
     stages {
@@ -85,6 +91,9 @@ pipeline {
         }
 
         stage('Run') {
+            when {
+                expression { return params.RUN_APP }
+            }
             steps {
                 sh './demo'
             }

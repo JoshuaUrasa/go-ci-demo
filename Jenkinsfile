@@ -8,18 +8,24 @@ pipeline {
     }
 
     stages {
-
-   stage('Prepare tools') {
-    steps {
-        sh '''
+        stage('Prepare tools') {
+            steps {
+                sh '''
             mkdir -p "$WORKSPACE/.tools"
             GOBIN="$WORKSPACE/.tools" go install gotest.tools/gotestsum@v1.13.0
         '''
-    }
-}
+            }
+        }
+
+        stage('Dependencies') {
+            steps {
+                sh '''
+  go mod download
+  go mod verify
+  '''}}
         stage('Test') {
-    steps {
-        sh '''
+            steps {
+                sh '''
             mkdir -p reports
             rm -f reports/tests.xml
 
@@ -27,14 +33,14 @@ pipeline {
                 --junitfile reports/tests.xml \
                 -- -count=1 ./...
         '''
-    }
+            }
 
-    post {
-        always {
-            junit 'reports/tests.xml'
+            post {
+                always {
+                    junit 'reports/tests.xml'
+                }
+            }
         }
-    }
-}
 
         stage('Build') {
             steps {
@@ -79,5 +85,5 @@ pipeline {
         failure {
             echo 'FAILURE: Check Console Output for the first error.'
         }
-    }
+        }
 }

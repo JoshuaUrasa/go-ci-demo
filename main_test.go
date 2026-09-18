@@ -1,13 +1,11 @@
-
 package main
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestAdd(t *testing.T) {
-    got := Add(2, 3)
-    want := 5
-
-    if got != want {
-        t.Fatalf("Add(2, 3) = %d; want %d", got, want)
-    }
+	assert.Equal(t, 5, Add(2, 3), "Add should add both numbers")
 }

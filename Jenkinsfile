@@ -9,10 +9,23 @@ pipeline {
 
     stages {
         stage('Test') {
-            steps {
-                sh 'go test -v -count=1 ./...'
-            }
+    steps {
+        sh '''
+            mkdir -p reports
+            rm -f reports/tests.xml
+
+            "$HOME/.local/bin/gotestsum" \
+                --junitfile reports/tests.xml \
+                -- -count=1 ./...
+        '''
+    }
+
+    post {
+        always {
+            junit 'reports/tests.xml'
         }
+    }
+}
 
         stage('Build') {
             steps {

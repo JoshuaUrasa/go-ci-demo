@@ -70,6 +70,16 @@ pipeline {
             '''
         }
     }
+
+    stage('Timeout practice') {
+        steps {
+            timeout(time: 5, unit: 'SECONDS') {
+                echo 'Starting work with a five-second limit'
+                sleep(time: 15, unit: 'SECONDS')
+                echo 'Work completed'
+            }
+        }
+    }
         stage('Prepare tools') {
             steps {
                 sh '''
@@ -150,6 +160,10 @@ pipeline {
 
         failure {
             echo 'FAILURE: Check Console Output for the first error.'
+        }
+
+        aborted {
+            echo 'ABORTED: Build was interrupted or timed out.'
         }
         }
 }

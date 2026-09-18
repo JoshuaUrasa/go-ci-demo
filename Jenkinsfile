@@ -8,13 +8,21 @@ pipeline {
     }
 
     stages {
+
+    stage('Prepare tools'){
+          steps {
+          sh '''
+          mkdir -p "$WORKSPACE/ .tools"
+          GOBIN="$WORKSPACE/ .tools" go install gotest.tools/gotestsum@v1.13.0
+          '''}
+          }
         stage('Test') {
     steps {
         sh '''
             mkdir -p reports
             rm -f reports/tests.xml
 
-            "$HOME/.local/bin/gotestsum" \
+           "$WORKSPACE/.tools/gotestsum" \
                 --junitfile reports/tests.xml \
                 -- -count=1 ./...
         '''

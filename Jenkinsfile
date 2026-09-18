@@ -12,7 +12,21 @@ pipeline {
         LAB_MODE = 'normal'
     }
 
+    parameters {
+        string(
+            name: 'BUILD_MESSAGE',
+            defaultValue: 'Learning Jenkins',
+            description: 'A message to display for this build'
+        )
+    }
+
     stages {
+
+    stage('Show parameters') {
+        steps {
+            echo "Build message: ${params.BUILD_MESSAGE}"
+        }
+    }
 
     stage('Stage environment') {
         environment {

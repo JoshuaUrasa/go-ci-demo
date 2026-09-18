@@ -68,7 +68,7 @@ pipeline {
                 archiveArtifacts(
                     artifacts: "dist/go-ci-demo-${env.BUILD_NUMBER}.tar.gz",
                     allowEmptyArchive: false
-                    fingerprint:true
+                    Fingerprint:true
                 )
             }
         }

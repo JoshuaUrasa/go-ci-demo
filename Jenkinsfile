@@ -7,7 +7,29 @@ pipeline {
         pollSCM('* * * * *')
     }
 
+    environment {
+        APP_NAME = 'go-ci-demo'
+        LAB_MODE = 'normal'
+    }
+
     stages {
+
+    stage('Stage environment') {
+        environment {
+            LAB_MODE = 'testing'
+        }
+
+        steps {
+            echo "Application: ${env.APP_NAME}"
+            sh 'echo "Inside first stage: $LAB_MODE"'
+        }
+    }
+
+    stage('Pipeline environment') {
+        steps {
+            sh 'echo "Inside second stage: $LAB_MODE"'
+        }
+    }
         stage('Prepare tools') {
             steps {
                 sh '''

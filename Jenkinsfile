@@ -24,6 +24,12 @@ pipeline {
             defaultValue: true,
             description: 'Run the application after building'
         )
+
+        choice(
+            name: 'BUILD_MODE',
+            choices: ['normal', 'diagnostic'],
+            description: 'Choose whether to show agent diagnostics'
+        )
     }
 
     stages {
@@ -48,6 +54,20 @@ pipeline {
     stage('Pipeline environment') {
         steps {
             sh 'echo "Inside second stage: $LAB_MODE"'
+        }
+    }
+
+    stage('Diagnostics') {
+        when {
+            expression { return params.BUILD_MODE == 'diagnostic' }
+        }
+        steps {
+            sh '''
+                whoami
+                pwd
+                go version
+                git --version
+            '''
         }
     }
         stage('Prepare tools') {

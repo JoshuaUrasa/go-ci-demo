@@ -9,3 +9,8 @@ import (
 func TestAdd(t *testing.T) {
 	assert.Equal(t, 5, Add(2, 3), "Add should add both numbers")
 }
+
+
+func TestAddNegativeNumbers(t *testing.T){
+	assert.Equal(t,-5,Add(-2,-3))
+}

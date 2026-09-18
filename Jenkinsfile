@@ -70,6 +70,24 @@ pipeline {
             '''
         }
     }
+    stage('Retry practice') {
+        steps {
+            script {
+                def attempt = 0
+
+                retry(3) {
+                    attempt++
+                    echo "Attempt ${attempt}"
+
+                    if (attempt == 1) {
+                        error('Simulated temporary failure')
+                    }
+
+                    echo 'Operation succeeded'
+                }
+            }
+        }
+    }
         stage('Prepare tools') {
             steps {
                 sh '''

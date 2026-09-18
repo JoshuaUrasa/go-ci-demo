@@ -9,13 +9,14 @@ pipeline {
 
     stages {
 
-    stage('Prepare tools'){
-          steps {
-          sh '''
-          mkdir -p "$WORKSPACE/ .tools"
-          GOBIN="$WORKSPACE/ .tools" go install gotest.tools/gotestsum@v1.13.0
-          '''}
-          }
+   stage('Prepare tools') {
+    steps {
+        sh '''
+            mkdir -p "$WORKSPACE/.tools"
+            GOBIN="$WORKSPACE/.tools" go install gotest.tools/gotestsum@v1.13.0
+        '''
+    }
+}
         stage('Test') {
     steps {
         sh '''
